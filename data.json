@@ -295,16 +295,6 @@
       "at": "2026-09-30T12:00:00.000Z"
     }
   },
-  "expenses": [
-    {
-      "id": "e2",
-      "date": "2026-09-30",
-      "description": "Medicina y artículos de higiene",
-      "amountUsd": 0,
-      "amountVes": 14543.16,
-      "receiptPath": null,
-      "createdAt": "2026-09-30T12:00:01.000Z"
-    }
-  ],
-  "updatedAt": "2026-09-30T22:49:23.044Z"
+  "expenses": [],
+  "updatedAt": "2026-09-30T22:49:24.939Z"
 }
