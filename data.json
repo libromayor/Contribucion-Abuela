@@ -297,15 +297,6 @@
   },
   "expenses": [
     {
-      "id": "e1",
-      "date": "2026-09-30",
-      "description": "Medicina Lasix 40mg",
-      "amountUsd": 0,
-      "amountVes": 4563.14,
-      "receiptPath": null,
-      "createdAt": "2026-09-30T12:00:00.000Z"
-    },
-    {
       "id": "e2",
       "date": "2026-09-30",
       "description": "Medicina y artículos de higiene",
@@ -315,5 +306,5 @@
       "createdAt": "2026-09-30T12:00:01.000Z"
     }
   ],
-  "updatedAt": "2026-09-30T22:46:21.730Z"
+  "updatedAt": "2026-09-30T22:49:23.044Z"
 }
