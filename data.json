@@ -1,0 +1,101 @@
+{
+  "title": "Abuela",
+  "subtitle": "Aporte quincenal del grupo para su cuidado. Toca el lápiz para ajustar estos datos.",
+  "amountPerPerson": 5,
+  "currency": "USD",
+  "goal": null,
+  "startDate": "2026-09-03",
+  "people": [
+    {
+      "id": "p1",
+      "name": "Patricia"
+    },
+    {
+      "id": "p2",
+      "name": "Yanexis"
+    },
+    {
+      "id": "p3",
+      "name": "Orlandito"
+    },
+    {
+      "id": "p4",
+      "name": "Nelysmar"
+    },
+    {
+      "id": "p5",
+      "name": "Marelis"
+    },
+    {
+      "id": "p6",
+      "name": "Gregorito"
+    },
+    {
+      "id": "p7",
+      "name": "Kelvin"
+    },
+    {
+      "id": "p8",
+      "name": "Luis Alberto"
+    },
+    {
+      "id": "p9",
+      "name": "Alexis"
+    },
+    {
+      "id": "p10",
+      "name": "Dipson"
+    },
+    {
+      "id": "p11",
+      "name": "Aurimar"
+    },
+    {
+      "id": "p12",
+      "name": "Brayan"
+    },
+    {
+      "id": "p13",
+      "name": "Andrea"
+    },
+    {
+      "id": "p14",
+      "name": "Luis Fernando"
+    },
+    {
+      "id": "p15",
+      "name": "Edwin"
+    },
+    {
+      "id": "p16",
+      "name": "Kelly"
+    },
+    {
+      "id": "p17",
+      "name": "Luis Alejandro"
+    }
+  ],
+  "quincenas": [
+    {
+      "id": "2026-09-1",
+      "label": "1–15 de septiembre 2026",
+      "start": 1788235200000
+    }
+  ],
+  "payments": {
+    "2026-09-1:p2": {
+      "paid": true,
+      "currency": "USD",
+      "amount": 5,
+      "at": "2026-09-04T00:17:31.842Z"
+    },
+    "2026-09-1:p1": {
+      "paid": true,
+      "currency": "USD",
+      "amount": 5,
+      "at": "2026-09-04T00:17:42.941Z"
+    }
+  },
+  "updatedAt": "2026-09-30T21:02:22.263Z",
+  "expenses": []
+}
