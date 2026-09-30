@@ -1,0 +1,315 @@
+{
+  "title": "Abuela",
+  "subtitle": "Aporte quincenal del grupo para su cuidado. Toca el lápiz para ajustar estos datos.",
+  "amountPerPerson": 5,
+  "currency": "USD",
+  "goal": null,
+  "startDate": "2026-09-03",
+  "people": [
+    {
+      "id": "p1",
+      "name": "Patricia"
+    },
+    {
+      "id": "p2",
+      "name": "Yanexis"
+    },
+    {
+      "id": "p3",
+      "name": "Orlando"
+    },
+    {
+      "id": "p4",
+      "name": "Nelysmar"
+    },
+    {
+      "id": "p5",
+      "name": "Marelis"
+    },
+    {
+      "id": "p6",
+      "name": "Gregorio"
+    },
+    {
+      "id": "p7",
+      "name": "Kelvin"
+    },
+    {
+      "id": "p8",
+      "name": "Luis Alberto"
+    },
+    {
+      "id": "p9",
+      "name": "Alexis"
+    },
+    {
+      "id": "p10",
+      "name": "Dipson"
+    },
+    {
+      "id": "p11",
+      "name": "Aurimar"
+    },
+    {
+      "id": "p12",
+      "name": "Brayan"
+    },
+    {
+      "id": "p13",
+      "name": "Andrea"
+    },
+    {
+      "id": "p14",
+      "name": "Luis Fernando"
+    },
+    {
+      "id": "p15",
+      "name": "Edwin"
+    },
+    {
+      "id": "p16",
+      "name": "Kelly"
+    },
+    {
+      "id": "p17",
+      "name": "Luis Alejandro"
+    },
+    {
+      "id": "p18",
+      "name": "Damelis"
+    }
+  ],
+  "quincenas": [
+    {
+      "id": "2026-09-1",
+      "label": "1–15 de septiembre 2026",
+      "start": 1788235200000
+    },
+    {
+      "id": "2026-09-2",
+      "label": "16–30 de septiembre 2026",
+      "start": 1789531200000
+    }
+  ],
+  "payments": {
+    "2026-09-1:p1": {
+      "paid": true,
+      "currency": "USD",
+      "amount": 5,
+      "at": "2026-09-04T00:17:42.941Z"
+    },
+    "2026-09-1:p2": {
+      "paid": true,
+      "currency": "USD",
+      "amount": 5,
+      "at": "2026-09-04T00:17:31.842Z"
+    },
+    "2026-09-1:p3": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4300,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p4": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4300,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p5": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4300,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p6": {
+      "paid": false,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p7": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4300,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p8": {
+      "paid": true,
+      "currency": "USD",
+      "amount": 5,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p9": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4300,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p10": {
+      "paid": false,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p11": {
+      "paid": false,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p12": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4300,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p13": {
+      "paid": false,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p14": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4300,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p15": {
+      "paid": false,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p16": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4211.03,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p17": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4300,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-1:p18": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4300,
+      "at": "2026-09-15T12:00:00.000Z"
+    },
+    "2026-09-2:p1": {
+      "paid": true,
+      "currency": "USD",
+      "amount": 5,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p2": {
+      "paid": true,
+      "currency": "USD",
+      "amount": 5,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p3": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p4": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p5": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p6": {
+      "paid": false,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p7": {
+      "paid": false,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p8": {
+      "paid": true,
+      "currency": "USD",
+      "amount": 5,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p9": {
+      "paid": false,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p10": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 8800,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p11": {
+      "paid": false,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p12": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p13": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p14": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p15": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p16": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p17": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-09-2:p18": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4400,
+      "at": "2026-09-30T12:00:00.000Z"
+    }
+  },
+  "expenses": [
+    {
+      "id": "e1",
+      "date": "2026-09-30",
+      "description": "Medicina Lasix 40mg",
+      "amountUsd": 0,
+      "amountVes": 4563.14,
+      "receiptPath": null,
+      "createdAt": "2026-09-30T12:00:00.000Z"
+    },
+    {
+      "id": "e2",
+      "date": "2026-09-30",
+      "description": "Medicina y artículos de higiene",
+      "amountUsd": 0,
+      "amountVes": 14543.16,
+      "receiptPath": null,
+      "createdAt": "2026-09-30T12:00:01.000Z"
+    }
+  ],
+  "updatedAt": "2026-09-30T22:40:00.000Z"
+}
