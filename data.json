@@ -295,6 +295,16 @@
       "at": "2026-09-30T12:00:00.000Z"
     }
   },
-  "expenses": [],
-  "updatedAt": "2026-09-30T22:49:24.939Z"
+  "expenses": [
+    {
+      "id": "emuouj1dii6z5",
+      "date": "2026-09-18",
+      "description": "Centro de cama/toallin/papel higiénico",
+      "amountUsd": 0,
+      "amountVes": 14543.16,
+      "receiptPath": "receipts/muouizy3dol128.png",
+      "createdAt": "2026-10-01T01:19:05.142Z"
+    }
+  ],
+  "updatedAt": "2026-10-01T01:19:05.155Z"
 }
