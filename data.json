@@ -313,7 +313,16 @@
       "amountVes": 4563.14,
       "receiptPath": "receipts/muov1p2crj3vo7.png",
       "createdAt": "2026-10-01T01:33:37.507Z"
+    },
+    {
+      "id": "emuswl04kd95x",
+      "date": "2026-10-03",
+      "description": "Medicina Lansix/Tensomax",
+      "amountUsd": 0,
+      "amountVes": 26843.99,
+      "receiptPath": "receipts/muswkz0ek0h4ts.jpeg",
+      "createdAt": "2026-10-03T21:27:40.772Z"
     }
   ],
-  "updatedAt": "2026-10-01T01:33:37.525Z"
+  "updatedAt": "2026-10-03T21:27:40.782Z"
 }
