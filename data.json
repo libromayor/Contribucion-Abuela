@@ -81,14 +81,19 @@
   ],
   "quincenas": [
     {
-      "id": "2026-09-1",
-      "label": "1–15 de septiembre 2026",
-      "start": 1788235200000
+      "id": "2026-10-1",
+      "label": "1–15 de octubre 2026",
+      "start": 1790827200000
     },
     {
       "id": "2026-09-2",
       "label": "16–30 de septiembre 2026",
       "start": 1789531200000
+    },
+    {
+      "id": "2026-09-1",
+      "label": "1–15 de septiembre 2026",
+      "start": 1788235200000
     }
   ],
   "payments": {
@@ -293,6 +298,12 @@
       "currency": "VES",
       "amount": 4400,
       "at": "2026-09-30T12:00:00.000Z"
+    },
+    "2026-10-1:p1": {
+      "paid": true,
+      "currency": "VES",
+      "amount": 4500,
+      "at": "2026-10-15T14:46:03.153Z"
     }
   },
   "expenses": [
@@ -333,5 +344,5 @@
       "createdAt": "2026-10-03T21:28:18.354Z"
     }
   ],
-  "updatedAt": "2026-10-03T21:28:18.372Z"
+  "updatedAt": "2026-10-15T14:46:03.162Z"
 }
