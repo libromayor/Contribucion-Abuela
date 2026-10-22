@@ -384,7 +384,16 @@
       "amountVes": 9395.16,
       "receiptPath": "receipts/muswlrun4ikms9.jpeg",
       "createdAt": "2026-10-03T21:28:18.354Z"
+    },
+    {
+      "id": "emvjndt891qiq",
+      "date": "2026-10-21",
+      "description": "Medicina Furosemida",
+      "amountUsd": 0,
+      "amountVes": 4640.78,
+      "receiptPath": "receipts/mvjndrbwaz72xe.png",
+      "createdAt": "2026-10-22T14:39:55.450Z"
     }
   ],
-  "updatedAt": "2026-10-16T03:57:07.612Z"
+  "updatedAt": "2026-10-22T14:39:55.468Z"
 }
