@@ -491,7 +491,16 @@
       "amountVes": 4425.69,
       "receiptPath": "receipts/mvvseaos0vmgff.png",
       "createdAt": "2026-10-31T02:33:32.559Z"
+    },
+    {
+      "id": "emvwjdnbtekba",
+      "date": "2026-10-30",
+      "description": "Artículos higiene personal",
+      "amountUsd": 0,
+      "amountVes": 18640.75,
+      "receiptPath": "receipts/mvwjdl0apkwbmc.png",
+      "createdAt": "2026-10-31T15:08:49.626Z"
     }
   ],
-  "updatedAt": "2026-10-31T02:37:53.164Z"
+  "updatedAt": "2026-10-31T15:08:49.639Z"
 }
