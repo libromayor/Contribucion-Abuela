@@ -971,6 +971,11 @@
   var PBKDF2_ITERATIONS = 200000;
   var UNLOCK_KEY = 'contribucion-abuela-unlocked-v1';
   var TOKEN_CACHE_KEY = 'contribucion-abuela-token-cache-v1';
+  // Huella del bloque cifrado que estaba activo cuando se guardó el token
+  // en este navegador. Si alguien rota el token (cambia las líneas ENC_*),
+  // la huella ya no coincide y la sesión guardada se descarta en vez de
+  // seguir usando un token viejo que el servidor va a rechazar.
+  var TOKEN_VERSION_KEY = 'contribucion-abuela-token-version-v1';
   var GH_TOKEN = null;
   var currentSha = null;
 
@@ -1007,6 +1012,18 @@
         [usage]
       );
     });
+  }
+  // Huella corta y determinística del bloque cifrado actual (no es
+  // criptografía, solo un marcador de versión). Cambia cada vez que se
+  // rota el token embebido, para poder detectar una sesión guardada que
+  // quedó desactualizada.
+  function computeTokenVersion() {
+    var str = ENC_SALT_B64 + ENC_IV_B64 + ENC_TOKEN_B64;
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
+    }
+    return String(hash);
   }
   function tryDecryptToken(password) {
     var salt = b64ToBytes(ENC_SALT_B64);
@@ -1804,7 +1821,7 @@
   function goReadOnly() {
     if (dirtySnapshot !== null) { state = JSON.parse(dirtySnapshot); dirtySnapshot = null; }
     readOnly = true;
-    try { localStorage.removeItem(UNLOCK_KEY); localStorage.removeItem(TOKEN_CACHE_KEY); } catch (e) {}
+    try { localStorage.removeItem(UNLOCK_KEY); localStorage.removeItem(TOKEN_CACHE_KEY); localStorage.removeItem(TOKEN_VERSION_KEY); } catch (e) {}
     renderAll();
     setSaveState("", "");
   }
@@ -1828,7 +1845,7 @@
           setSaveState("", "Alguien más guardó un cambio primero — esta pantalla se actualizó.");
         });
       } else if (code === "http_401" || code === "http_403") {
-        setSaveState("err", "La contraseña ya no es válida para guardar.");
+        setSaveState("err", "El acceso para guardar ya no es válido (el token pudo expirar o fue reemplazado). Vuelve a entrar con la contraseña.");
         goReadOnly();
       } else {
         setSaveState("err", "No se pudo guardar. Se reintentará.");
@@ -1889,7 +1906,7 @@
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Verificando…"; }
       tryDecryptToken(val).then(function (token) {
         GH_TOKEN = token;
-        try { localStorage.setItem(UNLOCK_KEY, "1"); localStorage.setItem(TOKEN_CACHE_KEY, token); } catch (e) {}
+        try { localStorage.setItem(UNLOCK_KEY, "1"); localStorage.setItem(TOKEN_CACHE_KEY, token); localStorage.setItem(TOKEN_VERSION_KEY, computeTokenVersion()); } catch (e) {}
         readOnly = false;
         refreshSha();
         hideUnlockOverlay();
@@ -1914,15 +1931,23 @@
   }
 
   function initAuth() {
-    var cachedToken = null, unlocked = false;
+    var cachedToken = null, unlocked = false, cachedVersion = null;
     try {
       unlocked = localStorage.getItem(UNLOCK_KEY) === "1";
       cachedToken = localStorage.getItem(TOKEN_CACHE_KEY);
+      cachedVersion = localStorage.getItem(TOKEN_VERSION_KEY);
     } catch (e) {}
-    if (unlocked && cachedToken) {
+    // Si el token embebido en la página cambió desde que se guardó esta
+    // sesión (por ejemplo, se rotó el token de GitHub), la sesión guardada
+    // queda obsoleta: se descarta en vez de usar un token que el servidor
+    // va a rechazar, y se pide entrar de nuevo con la contraseña para
+    // derivar el token vigente.
+    if (unlocked && cachedToken && cachedVersion === computeTokenVersion()) {
       GH_TOKEN = cachedToken;
       readOnly = false;
       refreshSha();
+    } else if (unlocked) {
+      try { localStorage.removeItem(UNLOCK_KEY); localStorage.removeItem(TOKEN_CACHE_KEY); localStorage.removeItem(TOKEN_VERSION_KEY); } catch (e) {}
     }
   }
 
