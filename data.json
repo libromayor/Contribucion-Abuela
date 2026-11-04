@@ -563,7 +563,16 @@
       "amountVes": 14512.06,
       "receiptPath": "receipts/mw2jz7x5pg6sxk.png",
       "createdAt": "2026-11-04T20:12:15.679Z"
+    },
+    {
+      "id": "emw2k11kowzcy",
+      "date": "2026-11-04",
+      "description": "Delivery (Medicina)",
+      "amountUsd": 0,
+      "amountVes": 9438.59,
+      "receiptPath": "receipts/mw2k0zqay8jxhx.png",
+      "createdAt": "2026-11-04T20:13:38.233Z"
     }
   ],
-  "updatedAt": "2026-11-04T20:12:15.705Z"
+  "updatedAt": "2026-11-04T20:13:38.269Z"
 }
