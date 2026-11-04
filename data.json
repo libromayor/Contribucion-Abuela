@@ -527,7 +527,16 @@
       "amountVes": 4630.17,
       "receiptPath": "receipts/mw1d545c8me9ct.png",
       "createdAt": "2026-11-04T00:13:06.696Z"
+    },
+    {
+      "id": "emw1d7ja64o0k",
+      "date": "2026-11-02",
+      "description": "Medicina (Atroceran/Esoz 20mg)",
+      "amountUsd": 0,
+      "amountVes": 18645.5,
+      "receiptPath": "receipts/mw1d7hdz82k4n0.png",
+      "createdAt": "2026-11-04T00:14:57.631Z"
     }
   ],
-  "updatedAt": "2026-11-04T00:13:06.715Z"
+  "updatedAt": "2026-11-04T00:14:57.652Z"
 }
