@@ -1319,18 +1319,28 @@
     h += '<div class="hist-scroll"><table class="hist"><thead><tr><th class="hist-name">Nombre</th>';
     qs.forEach(function (q) { h += '<th>' + shortQuincena(q) + '</th>'; });
     h += '<th>Total</th></tr></thead><tbody>';
-    state.people.forEach(function (p) {
-      var paid = 0, due = 0;
-      h += '<tr><td class="hist-name">' + escapeHtml(p.name) + '</td>';
+    // Rank people best -> worst: fewest missed payments first, then most
+    // payments made, then alphabetical. Someone who never paid ends up last.
+    var rows = state.people.map(function (p) {
+      var paid = 0, due = 0, cells = '';
       qs.forEach(function (q) {
         var rec = state.payments[q.id + ":" + p.id];
         var ok = !!(rec && rec.paid);
         var isCur = q.id === cur.id;
-        if (ok) { paid++; due++; h += '<td><i class="hist-dot ok" title="Pagó">✓</i></td>'; }
-        else if (isCur) { h += '<td><i class="hist-dot wait" title="Pendiente (quincena en curso)">…</i></td>'; }
-        else { due++; h += '<td><i class="hist-dot no" title="No pagó">✗</i></td>'; }
+        if (ok) { paid++; due++; cells += '<td><i class="hist-dot ok" title="Pagó">✓</i></td>'; }
+        else if (isCur) { cells += '<td><i class="hist-dot wait" title="Pendiente (quincena en curso)">…</i></td>'; }
+        else { due++; cells += '<td><i class="hist-dot no" title="No pagó">✗</i></td>'; }
       });
-      h += '<td class="hist-total">' + paid + '/' + due + '</td></tr>';
+      return { name: p.name, paid: paid, due: due, missed: due - paid, cells: cells };
+    });
+    rows.sort(function (a, b) {
+      if (a.missed !== b.missed) return a.missed - b.missed;
+      if (a.paid !== b.paid) return b.paid - a.paid;
+      return String(a.name).localeCompare(String(b.name), "es");
+    });
+    rows.forEach(function (r) {
+      h += '<tr><td class="hist-name">' + escapeHtml(r.name) + '</td>' + r.cells +
+        '<td class="hist-total">' + r.paid + '/' + r.due + '</td></tr>';
     });
     h += '</tbody></table></div>';
     body.innerHTML = h;
