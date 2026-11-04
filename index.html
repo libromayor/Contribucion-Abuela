@@ -220,6 +220,30 @@
   }
   .progress-fill { height: 100%; background: var(--accent); border-radius: 999px; }
 
+
+  /* ---- historial de pagos ---- */
+  .hist-toggle { width:100%; display:flex; justify-content:space-between; align-items:center; gap:10px; background:none; border:0; padding:0; font:inherit; color:inherit; cursor:pointer; text-align:left; }
+  .hist-toggle h2 { font-size:19px; font-weight:600; margin:0; }
+  .hist-chevron { font-size:18px; color:var(--muted); transition:transform .2s; }
+  .hist-open .hist-chevron { transform:rotate(180deg); }
+  .hist-body { display:none; margin-top:14px; }
+  .hist-open .hist-body { display:block; }
+  .hist-legend { display:flex; flex-wrap:wrap; gap:12px; font-size:12.5px; color:var(--ink-soft); margin-bottom:12px; }
+  .hist-legend span { display:inline-flex; align-items:center; gap:6px; }
+  .hist-scroll { overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
+  table.hist { border-collapse:separate; border-spacing:0; width:100%; font-size:13.5px; }
+  table.hist th, table.hist td { padding:8px 6px; text-align:center; border-bottom:1px solid var(--line); white-space:nowrap; }
+  table.hist tr:last-child td { border-bottom:0; }
+  table.hist thead th { font-size:11.5px; font-weight:600; color:var(--muted); background:var(--surface-2); line-height:1.25; }
+  table.hist th.hist-name, table.hist td.hist-name { text-align:left; position:sticky; left:0; background:var(--surface); padding-left:12px; padding-right:12px; font-weight:500; z-index:1; }
+  table.hist thead th.hist-name { background:var(--surface-2); }
+  table.hist td.hist-total { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .hist-dot { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; font-size:14px; font-weight:700; line-height:1; }
+  .hist-dot.ok { background:var(--paid-bg); color:var(--paid-text); }
+  .hist-dot.no { background:var(--danger-soft); color:var(--danger); }
+  .hist-dot.wait { background:var(--pending-bg); color:var(--pending-text); font-size:12px; }
+  .hist-empty { font-size:13px; color:var(--muted); padding:6px 0; }
+
   /* ---- tabs ---- */
   .tabs { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .tab {
@@ -574,6 +598,14 @@
     <div class="progress-track"><div class="progress-fill" id="grid-progress-fill" style="width:0%"></div></div>
     <div class="roster" id="roster"></div>
     <button class="add-person-btn" id="add-person-btn">+ Agregar persona</button>
+  </section>
+
+  <section class="card" id="hist-card">
+    <button class="hist-toggle" id="hist-toggle" aria-expanded="false">
+      <h2>Historial de pagos</h2>
+      <span class="hist-chevron">&#9662;</span>
+    </button>
+    <div class="hist-body" id="hist-body"></div>
   </section>
 
   <section class="card">
@@ -1261,6 +1293,52 @@
 
   // ---------- rendering ----------
 
+  // ---------- historial de pagos ----------
+  var histOpen = false;
+  function shortQuincena(q) {
+    var m = /^(\d{4})-(\d{2})-(\d)$/.exec(q.id);
+    if (!m) return escapeHtml(q.label);
+    var mes = MESES[Number(m[2]) - 1].slice(0, 3);
+    return (m[3] === "1" ? "1–15" : "16–" + lastDayOfMonth(Number(m[1]), Number(m[2]) - 1)) + "<br>" + escapeHtml(mes) + " " + String(m[1]).slice(2);
+  }
+  function renderHistory() {
+    var card = document.getElementById("hist-card");
+    if (!card) return;
+    card.classList.toggle("hist-open", histOpen);
+    document.getElementById("hist-toggle").setAttribute("aria-expanded", histOpen ? "true" : "false");
+    var body = document.getElementById("hist-body");
+    if (!histOpen) { body.innerHTML = ""; return; }
+    var cur = periodFor(effectiveNow());
+    // oldest -> newest, only periods that have started
+    var qs = visibleQuincenas().filter(function (q) { return q.start <= cur.start; }).sort(function (a, b) { return a.start - b.start; });
+    if (!qs.length || !state.people.length) { body.innerHTML = '<div class="hist-empty">Todavía no hay quincenas registradas.</div>'; return; }
+    var h = '<div class="hist-legend">' +
+      '<span><i class="hist-dot ok">✓</i> Pagó</span>' +
+      '<span><i class="hist-dot no">✗</i> No pagó</span>' +
+      '<span><i class="hist-dot wait">…</i> Quincena en curso</span></div>';
+    h += '<div class="hist-scroll"><table class="hist"><thead><tr><th class="hist-name">Nombre</th>';
+    qs.forEach(function (q) { h += '<th>' + shortQuincena(q) + '</th>'; });
+    h += '<th>Total</th></tr></thead><tbody>';
+    state.people.forEach(function (p) {
+      var paid = 0, due = 0;
+      h += '<tr><td class="hist-name">' + escapeHtml(p.name) + '</td>';
+      qs.forEach(function (q) {
+        var rec = state.payments[q.id + ":" + p.id];
+        var ok = !!(rec && rec.paid);
+        var isCur = q.id === cur.id;
+        if (ok) { paid++; due++; h += '<td><i class="hist-dot ok" title="Pagó">✓</i></td>'; }
+        else if (isCur) { h += '<td><i class="hist-dot wait" title="Pendiente (quincena en curso)">…</i></td>'; }
+        else { due++; h += '<td><i class="hist-dot no" title="No pagó">✗</i></td>'; }
+      });
+      h += '<td class="hist-total">' + paid + '/' + due + '</td></tr>';
+    });
+    h += '</tbody></table></div>';
+    body.innerHTML = h;
+  }
+  document.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest("#hist-toggle")) { histOpen = !histOpen; renderHistory(); }
+  });
+
   function renderAll() {
     document.body.classList.toggle("export-mode", readOnly);
     renderBanner();
@@ -1268,6 +1346,7 @@
     renderStats();
     renderTabs();
     renderGrid();
+    renderHistory();
     renderExpenses();
     document.getElementById("edit-toggle").style.visibility = "visible";
   }
