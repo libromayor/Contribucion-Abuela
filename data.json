@@ -500,7 +500,16 @@
       "amountVes": 18640.75,
       "receiptPath": "receipts/mvwjdl0apkwbmc.png",
       "createdAt": "2026-10-31T15:08:49.626Z"
+    },
+    {
+      "id": "emw1csxfch5lc",
+      "date": "2026-11-03",
+      "description": "Medicina",
+      "amountUsd": 0,
+      "amountVes": 12771.26,
+      "receiptPath": "receipts/mw1csvi52j1wzs.png",
+      "createdAt": "2026-11-04T00:03:36.121Z"
     }
   ],
-  "updatedAt": "2026-10-31T15:08:49.639Z"
+  "updatedAt": "2026-11-04T00:03:36.141Z"
 }
