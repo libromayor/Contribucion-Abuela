@@ -391,6 +391,27 @@
   .expense-desc { font-size: 14.5px; }
   .expense-meta { font-size: 12px; color: var(--muted); margin-top: 1px; }
   .expense-amount { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 15px; white-space: nowrap; }
+
+  /* ---- visor de facturas ---- */
+  .receipt-viewer {
+    position: fixed; inset: 0; z-index: 9999; display: flex; flex-direction: column;
+    background: rgba(8, 12, 10, 0.96);
+  }
+  .receipt-viewer-bar {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 12px;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px;
+  }
+  .receipt-viewer-back {
+    appearance: none; border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.1);
+    color: #fff; font: inherit; font-weight: 600; font-size: 16px;
+    padding: 10px 18px; border-radius: 999px; cursor: pointer;
+  }
+  .receipt-viewer-body {
+    flex: 1 1 auto; overflow: auto; -webkit-overflow-scrolling: touch;
+    display: flex; align-items: flex-start; justify-content: center; padding: 0 12px 24px;
+  }
+  .receipt-viewer-body img { max-width: 100%; height: auto; border-radius: 8px; }
+  .receipt-viewer-body iframe { width: 100%; height: 100%; min-height: 70vh; border: 0; background: #fff; border-radius: 8px; }
   .receipt-link {
     font-size: 12px;
     font-weight: 500;
@@ -1293,6 +1314,39 @@
 
   // ---------- rendering ----------
 
+  // ---------- visor de facturas ----------
+  function closeReceiptViewer() {
+    var v = document.getElementById("receipt-viewer");
+    if (v) v.remove();
+    document.body.style.overflow = "";
+  }
+  function openReceiptViewer(path) {
+    closeReceiptViewer();
+    var v = document.createElement("div");
+    v.id = "receipt-viewer";
+    v.className = "receipt-viewer";
+    var bar = document.createElement("div");
+    bar.className = "receipt-viewer-bar";
+    var back = document.createElement("button");
+    back.type = "button";
+    back.className = "receipt-viewer-back";
+    back.textContent = "← Volver";
+    back.addEventListener("click", closeReceiptViewer);
+    bar.appendChild(back);
+    var body = document.createElement("div");
+    body.className = "receipt-viewer-body";
+    var isPdf = /\.pdf($|\?)/i.test(path);
+    var el = document.createElement(isPdf ? "iframe" : "img");
+    el.src = path;
+    if (!isPdf) el.alt = "Factura";
+    body.appendChild(el);
+    v.appendChild(bar);
+    v.appendChild(body);
+    document.body.appendChild(v);
+    document.body.style.overflow = "hidden";
+  }
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeReceiptViewer(); });
+
   // ---------- historial de pagos ----------
   var histOpen = false;
   function shortQuincena(q) {
@@ -1749,9 +1803,10 @@
       var link = document.createElement("a");
       link.className = "receipt-link";
       link.href = exp.receiptPath;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
       link.textContent = "Ver factura";
+      // Se abre dentro de la app (con botón Volver) en vez de salir a otra
+      // pantalla, para que en el teléfono siempre se pueda regresar.
+      link.addEventListener("click", function (ev) { ev.preventDefault(); openReceiptViewer(exp.receiptPath); });
       row.appendChild(link);
     }
 
