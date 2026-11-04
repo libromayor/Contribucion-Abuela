@@ -536,7 +536,16 @@
       "amountVes": 18645.5,
       "receiptPath": "receipts/mw1d7hdz82k4n0.png",
       "createdAt": "2026-11-04T00:14:57.631Z"
+    },
+    {
+      "id": "emw1fpepcex2n",
+      "date": "2026-11-03",
+      "description": "Delivery de Medicinas varias",
+      "amountUsd": 0,
+      "amountVes": 17451.73,
+      "receiptPath": "receipts/mw1fpcvu6t88lg.png",
+      "createdAt": "2026-11-04T01:24:50.738Z"
     }
   ],
-  "updatedAt": "2026-11-04T00:14:57.652Z"
+  "updatedAt": "2026-11-04T01:24:50.764Z"
 }
