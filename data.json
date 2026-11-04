@@ -518,7 +518,16 @@
       "amountVes": 13440,
       "receiptPath": "receipts/mw1cwuqfw3eqi0.png",
       "createdAt": "2026-11-04T00:06:41.698Z"
+    },
+    {
+      "id": "emw1d55on8quy",
+      "date": "2026-11-02",
+      "description": "Hidralitos 45",
+      "amountUsd": 0,
+      "amountVes": 4630.17,
+      "receiptPath": "receipts/mw1d545c8me9ct.png",
+      "createdAt": "2026-11-04T00:13:06.696Z"
     }
   ],
-  "updatedAt": "2026-11-04T00:06:41.720Z"
+  "updatedAt": "2026-11-04T00:13:06.715Z"
 }
