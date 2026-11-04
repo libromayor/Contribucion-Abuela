@@ -509,7 +509,16 @@
       "amountVes": 12771.26,
       "receiptPath": "receipts/mw1csvi52j1wzs.png",
       "createdAt": "2026-11-04T00:03:36.121Z"
+    },
+    {
+      "id": "emw1cwwm83ebm",
+      "date": "2026-11-03",
+      "description": "Artículos personales",
+      "amountUsd": 0,
+      "amountVes": 13440,
+      "receiptPath": "receipts/mw1cwuqfw3eqi0.png",
+      "createdAt": "2026-11-04T00:06:41.698Z"
     }
   ],
-  "updatedAt": "2026-11-04T00:03:36.141Z"
+  "updatedAt": "2026-11-04T00:06:41.720Z"
 }
