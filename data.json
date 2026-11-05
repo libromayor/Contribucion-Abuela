@@ -585,7 +585,18 @@
       "amountVes": 20000,
       "receiptPath": "receipts/mw3tjemokmiztw.png",
       "createdAt": "2026-11-05T17:27:39.502Z"
+    },
+    {
+      "id": "imw3v1hzywb63",
+      "type": "especial",
+      "date": "2026-11-05",
+      "personId": "p2",
+      "personName": "Yanexis",
+      "amountUsd": 20,
+      "amountVes": 0,
+      "receiptPath": "receipts/mw3v1ga9qfitg9.png",
+      "createdAt": "2026-11-05T18:09:41.470Z"
     }
   ],
-  "updatedAt": "2026-11-05T17:27:39.517Z"
+  "updatedAt": "2026-11-05T18:09:41.484Z"
 }
