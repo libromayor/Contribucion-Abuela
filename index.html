@@ -629,6 +629,72 @@
     <div class="hist-body" id="hist-body"></div>
   </section>
 
+  <section class="card" id="incomes-card">
+    <div class="grid-head">
+      <h2>Contribuciones especiales</h2>
+      <span class="grid-progress-note" id="incomes-total-note"></span>
+    </div>
+    <div class="expenses-list" id="incomes-list"></div>
+    <button class="add-person-btn" id="add-income-btn">+ Agregar ingreso</button>
+    <div class="add-expense-form" id="add-income-form">
+      <div class="field-row">
+        <div class="field">
+          <label for="new-inc-type">Tipo de ingreso</label>
+          <select id="new-inc-type">
+            <option value="especial">Contribución especial</option>
+            <option value="otro">Otro ingreso</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="new-inc-date">Fecha</label>
+          <input type="date" id="new-inc-date" />
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field" style="flex-basis: 100%;">
+          <label for="new-inc-who">Quién aportó</label>
+          <select id="new-inc-who"></select>
+        </div>
+      </div>
+      <div class="field-row" id="new-inc-other-row" style="display:none;">
+        <div class="field" style="flex-basis: 100%;">
+          <label for="new-inc-other">Nombre</label>
+          <input type="text" id="new-inc-other" maxlength="80" placeholder="Nombre de la persona" />
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field" style="flex-basis: 100%;">
+          <label for="new-inc-currency">Moneda del ingreso</label>
+          <select id="new-inc-currency">
+            <option value="USD">Dólares</option>
+            <option value="VES">Bolívares</option>
+            <option value="MIXTO">Mixto ($ + Bs)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field" id="new-inc-usd-field">
+          <label for="new-inc-amount-usd">Monto en USD</label>
+          <input type="number" id="new-inc-amount-usd" min="0" step="0.01" inputmode="decimal" placeholder="0.00" />
+        </div>
+        <div class="field" id="new-inc-ves-field" style="display:none;">
+          <label for="new-inc-amount-ves">Monto en Bs</label>
+          <input type="number" id="new-inc-amount-ves" min="0" step="0.01" inputmode="decimal" placeholder="0.00" />
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field" style="flex-basis: 100%;">
+          <label for="new-inc-file">Foto o captura del comprobante (opcional)</label>
+          <input type="file" id="new-inc-file" accept="image/*,application/pdf" />
+        </div>
+      </div>
+      <div class="field-row">
+        <button class="btn-primary" id="new-inc-save">Guardar ingreso</button>
+        <button class="btn-secondary" id="new-inc-cancel">Cancelar</button>
+      </div>
+    </div>
+  </section>
+
   <section class="card">
     <div class="grid-head">
       <h2>Gastos registrados</h2>
@@ -786,6 +852,17 @@
 
     var spent = totalSpent();
     var expenseList = (state.expenses || []).slice().sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+    var incomeList = (state.incomes || []).slice().sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+    var incomeTotal = totalIncomes();
+    var incomeRowsHtml = incomeList.map(function (i) {
+      var dateLabel = i.date ? new Date(i.date + "T00:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }) : "";
+      return (
+        '<div class="roster-row">' +
+          '<span class="name-block"><span class="name">' + escapeHtml(incomeWho(i)) + '</span><span class="paid-amount">' + escapeHtml(dateLabel) + '</span></span>' +
+          '<span class="value-secondary">' + escapeHtml(incomeAmountText(i)) + '</span>' +
+        '</div>'
+      );
+    }).join("\n");
     var liveUrl = (typeof location !== "undefined" && location.href) ? location.href : "";
     var hasReceipts = expenseList.some(function (e) { return !!e.receiptPath; });
     var expenseRowsHtml = expenseList.map(function (e) {
@@ -862,6 +939,12 @@
       rows,
       '</div>',
       '</section>',
+      (incomeList.length ? (
+        '<section class="card">' +
+        '<div class="grid-head"><h2>Contribuciones especiales</h2><div class="grid-note">' + escapeHtml(fmtMoney(incomeTotal.USD || 0, "USD")) + ' · ' + escapeHtml(fmtBs(incomeTotal.VES || 0)) + ' en total</div></div>' +
+        '<div class="roster" style="margin-top:10px;">' + incomeRowsHtml + '</div>' +
+        '</section>'
+      ) : ''),
       (expenseList.length ? (
         '<section class="card">' +
         '<div class="grid-head"><h2>Gastos</h2><div class="grid-note">' + escapeHtml(fmtMoney(spent.USD || 0, "USD")) + ' · ' + escapeHtml(fmtBs(spent.VES || 0)) + ' en total</div></div>' +
@@ -900,6 +983,14 @@
     lines.push("Recaudado en esta quincena: " + fmtMoney(qRaised.USD || 0, "USD") + " · " + fmtBs(qRaised.VES || 0));
     lines.push("Recaudado en total: " + fmtMoney(totalAll.USD || 0, "USD") + " · " + fmtBs(totalAll.VES || 0));
     var spent = totalSpent();
+    if ((state.incomes || []).length) {
+      lines.push("");
+      lines.push("Contribuciones especiales:");
+      state.incomes.slice().sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); }).forEach(function (i) {
+        var dl = i.date ? new Date(i.date + "T00:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "short" }) : "";
+        lines.push("• " + incomeWho(i) + " — " + incomeAmountText(i) + (dl ? " (" + dl + ")" : ""));
+      });
+    }
     if ((state.expenses || []).length) {
       lines.push("");
       lines.push("Gastos:");
@@ -1001,6 +1092,7 @@
       quincenas: [],
       payments: {},
       expenses: [],
+      incomes: [],
       updatedAt: null
     };
   }
@@ -1295,8 +1387,36 @@
     return n;
   }
 
+  // Ingresos extra (contribuciones especiales u otros): se llevan por
+  // moneda igual que los gastos y se suman a lo recaudado en total, así
+  // el saldo disponible los incluye automáticamente.
+  function incomeAmounts(i) {
+    return { usd: (i && Number(i.amountUsd)) || 0, ves: (i && Number(i.amountVes)) || 0 };
+  }
+
+  function incomeAmountText(i) {
+    var amt = incomeAmounts(i);
+    if (amt.usd && amt.ves) return fmtMoney(amt.usd, "USD") + " + " + fmtBs(amt.ves);
+    if (amt.ves) return fmtBs(amt.ves);
+    return fmtMoney(amt.usd, "USD");
+  }
+
+  function totalIncomes() {
+    var sums = { USD: 0, VES: 0 };
+    (state.incomes || []).forEach(function (i) {
+      var amt = incomeAmounts(i);
+      sums.USD += amt.usd;
+      sums.VES += amt.ves;
+    });
+    return sums;
+  }
+
   function totalRaised() {
-    return sumsByCurrency(null);
+    var sums = sumsByCurrency(null);
+    var inc = totalIncomes();
+    sums.USD = (sums.USD || 0) + inc.USD;
+    sums.VES = (sums.VES || 0) + inc.VES;
+    return sums;
   }
 
   // Igual que lo recaudado, lo gastado se lleva por moneda por separado
@@ -1411,6 +1531,7 @@
     renderTabs();
     renderGrid();
     renderHistory();
+    renderIncomes();
     renderExpenses();
     document.getElementById("edit-toggle").style.visibility = "visible";
   }
@@ -1761,6 +1882,90 @@
     return row;
   }
 
+  function incomeWho(i) {
+    if (i.personId) {
+      for (var k = 0; k < state.people.length; k++) if (state.people[k].id === i.personId) return state.people[k].name;
+    }
+    return i.personName || "Sin nombre";
+  }
+
+  function renderIncomes() {
+    var wrap = document.getElementById("incomes-list");
+    if (!wrap) return;
+    wrap.innerHTML = "";
+    var list = (state.incomes || []).slice().sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+    if (!list.length) {
+      var empty = document.createElement("div");
+      empty.className = "expense-meta";
+      empty.style.padding = "8px 4px";
+      empty.textContent = "Aún no hay contribuciones especiales.";
+      wrap.appendChild(empty);
+    } else {
+      list.forEach(function (inc) { wrap.appendChild(incomeRow(inc)); });
+    }
+    var note = document.getElementById("incomes-total-note");
+    if (note) {
+      var n = list.length;
+      var tot = totalIncomes();
+      note.textContent = fmtMoney(tot.USD || 0, "USD") + " · " + fmtBs(tot.VES || 0) + " en " + n + (n === 1 ? " ingreso" : " ingresos");
+    }
+  }
+
+  function incomeRow(inc) {
+    var row = document.createElement("div");
+    row.className = "expense-row";
+
+    var main = document.createElement("div");
+    main.className = "expense-main";
+    var desc = document.createElement("div");
+    desc.className = "expense-desc";
+    desc.textContent = incomeWho(inc);
+    main.appendChild(desc);
+    var meta = document.createElement("div");
+    meta.className = "expense-meta";
+    var dateTxt = inc.date ? new Date(inc.date + "T00:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }) : "";
+    meta.textContent = dateTxt + (inc.type === "otro" ? (dateTxt ? " · " : "") + "Otro ingreso" : "");
+    main.appendChild(meta);
+    row.appendChild(main);
+
+    if (inc.receiptPath) {
+      var link = document.createElement("a");
+      link.className = "receipt-link";
+      link.href = inc.receiptPath;
+      link.textContent = "Ver comprobante";
+      link.addEventListener("click", function (ev) { ev.preventDefault(); openReceiptViewer(inc.receiptPath); });
+      row.appendChild(link);
+    }
+
+    var amount = document.createElement("div");
+    amount.className = "expense-amount";
+    amount.textContent = incomeAmountText(inc);
+    row.appendChild(amount);
+
+    if (!readOnly) {
+      var removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "remove-btn";
+      removeBtn.title = "Quitar ingreso";
+      removeBtn.setAttribute("aria-label", "Quitar ingreso de " + incomeWho(inc));
+      removeBtn.textContent = "×";
+      removeBtn.addEventListener("click", function () {
+        if (readOnly) { flashReadOnly(); return; }
+        showConfirm("¿Quitar el ingreso de " + incomeWho(inc) + " por " + incomeAmountText(inc) + "?", { okLabel: "Quitar" }).then(function (ok) {
+          if (!ok) return;
+          commitChange(function () {
+            state.incomes = (state.incomes || []).filter(function (e) { return e.id !== inc.id; });
+          }, function () {
+            renderIncomes();
+            renderStats();
+          });
+        });
+      });
+      row.appendChild(removeBtn);
+    }
+    return row;
+  }
+
   function renderExpenses() {
     var wrap = document.getElementById("expenses-list");
     if (!wrap) return;
@@ -2007,6 +2212,7 @@
     state.quincenas = Array.isArray(data.quincenas) ? data.quincenas : [];
     state.payments = data.payments && typeof data.payments === "object" ? data.payments : {};
     state.expenses = Array.isArray(data.expenses) ? data.expenses : [];
+    state.incomes = Array.isArray(data.incomes) ? data.incomes : [];
   }
 
   // Cualquier visitante puede leer los datos — no hace falta contraseña
@@ -2313,6 +2519,129 @@
     });
   }
 
+  function wireAddIncome() {
+    var addBtn = document.getElementById("add-income-btn");
+    var form = document.getElementById("add-income-form");
+    if (!addBtn || !form) return;
+    var typeSelect = document.getElementById("new-inc-type");
+    var dateInput = document.getElementById("new-inc-date");
+    var whoSelect = document.getElementById("new-inc-who");
+    var otherRow = document.getElementById("new-inc-other-row");
+    var otherInput = document.getElementById("new-inc-other");
+    var currencySelect = document.getElementById("new-inc-currency");
+    var usdField = document.getElementById("new-inc-usd-field");
+    var vesField = document.getElementById("new-inc-ves-field");
+    var amountUsdInput = document.getElementById("new-inc-amount-usd");
+    var amountVesInput = document.getElementById("new-inc-amount-ves");
+    var fileInput = document.getElementById("new-inc-file");
+    var saveBtn = document.getElementById("new-inc-save");
+    var cancelBtn = document.getElementById("new-inc-cancel");
+
+    function fillPeople() {
+      whoSelect.innerHTML = "";
+      state.people.forEach(function (p) {
+        var o = document.createElement("option");
+        o.value = p.id;
+        o.textContent = p.name;
+        whoSelect.appendChild(o);
+      });
+      var other = document.createElement("option");
+      other.value = "__otra__";
+      other.textContent = "Otra persona…";
+      whoSelect.appendChild(other);
+    }
+    function applyWho() {
+      otherRow.style.display = whoSelect.value === "__otra__" ? "" : "none";
+    }
+    function applyCurrencyFields() {
+      var mode = currencySelect.value;
+      usdField.style.display = (mode === "USD" || mode === "MIXTO") ? "" : "none";
+      vesField.style.display = (mode === "VES" || mode === "MIXTO") ? "" : "none";
+    }
+    whoSelect.addEventListener("change", applyWho);
+    currencySelect.addEventListener("change", applyCurrencyFields);
+
+    addBtn.addEventListener("click", function () {
+      if (readOnly) { flashReadOnly(); return; }
+      fillPeople();
+      applyWho();
+      typeSelect.value = "especial";
+      dateInput.value = new Date().toISOString().slice(0, 10);
+      currencySelect.value = "USD";
+      applyCurrencyFields();
+      amountUsdInput.value = "";
+      amountVesInput.value = "";
+      otherInput.value = "";
+      fileInput.value = "";
+      form.classList.add("open");
+    });
+
+    cancelBtn.addEventListener("click", function () {
+      form.classList.remove("open");
+    });
+
+    saveBtn.addEventListener("click", function () {
+      if (readOnly) { flashReadOnly(); return; }
+      var mode = currencySelect.value;
+      var amountUsd = (mode === "USD" || mode === "MIXTO") ? (parseFloat(amountUsdInput.value) || 0) : 0;
+      var amountVes = (mode === "VES" || mode === "MIXTO") ? (parseFloat(amountVesInput.value) || 0) : 0;
+      if (amountUsd <= 0 && amountVes <= 0) {
+        (mode === "VES" ? amountVesInput : amountUsdInput).focus();
+        return;
+      }
+      var personId = null, personName = "";
+      if (whoSelect.value === "__otra__") {
+        personName = otherInput.value.trim();
+        if (!personName) { otherInput.focus(); return; }
+      } else {
+        personId = whoSelect.value;
+        personName = whoSelect.options[whoSelect.selectedIndex].textContent;
+      }
+      var date = dateInput.value || new Date().toISOString().slice(0, 10);
+      var type = typeSelect.value === "otro" ? "otro" : "especial";
+      var file = fileInput.files && fileInput.files[0];
+
+      saveBtn.disabled = true;
+      var originalLabel = saveBtn.textContent;
+      saveBtn.textContent = file ? "Subiendo foto…" : "Guardando…";
+
+      var uploadPromise = file
+        ? fileToBase64(file).then(function (b64) {
+            var ext = (file.name && file.name.indexOf(".") >= 0) ? file.name.slice(file.name.lastIndexOf(".")) : ".jpg";
+            var path = "receipts/" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8) + ext;
+            return ghPutBinaryFile(path, b64, "Agregar comprobante de ingreso: " + personName)
+              .then(function () { return path; })
+              .catch(function () { return null; });
+          })
+        : Promise.resolve(null);
+
+      uploadPromise.then(function (receiptPath) {
+        var id = "i" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+        commitChange(function () {
+          state.incomes = state.incomes || [];
+          state.incomes.push({
+            id: id,
+            type: type,
+            date: date,
+            personId: personId,
+            personName: personName,
+            amountUsd: amountUsd,
+            amountVes: amountVes,
+            receiptPath: receiptPath || null,
+            createdAt: new Date().toISOString()
+          });
+        }, function () {
+          renderIncomes();
+          renderStats();
+          form.classList.remove("open");
+        });
+      }).finally(function () {
+        saveBtn.disabled = false;
+        saveBtn.textContent = originalLabel;
+      });
+    });
+  }
+
   function init() {
     initAuth();
     loadState().then(function () {
@@ -2322,6 +2651,7 @@
       wireAddPerson();
       wireAddQuincena();
       wireAddExpense();
+      wireAddIncome();
       wireExport();
       wireUnlock();
     });
