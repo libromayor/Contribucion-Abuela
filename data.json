@@ -574,5 +574,18 @@
       "createdAt": "2026-11-04T20:13:38.233Z"
     }
   ],
-  "updatedAt": "2026-11-04T20:13:38.269Z"
+  "incomes": [
+    {
+      "id": "imw3tjg1ayprt",
+      "type": "especial",
+      "date": "2026-11-05",
+      "personId": "p8",
+      "personName": "Luis Alberto",
+      "amountUsd": 0,
+      "amountVes": 20000,
+      "receiptPath": "receipts/mw3tjemokmiztw.png",
+      "createdAt": "2026-11-05T17:27:39.502Z"
+    }
+  ],
+  "updatedAt": "2026-11-05T17:27:39.517Z"
 }
