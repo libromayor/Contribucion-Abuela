@@ -629,7 +629,18 @@
       "amountVes": 25000,
       "receiptPath": "receipts/mw42w673qtumhh.png",
       "createdAt": "2026-11-05T21:49:32.409Z"
+    },
+    {
+      "id": "imw45v7r3bw58",
+      "type": "especial",
+      "date": "2026-11-05",
+      "personId": "p7",
+      "personName": "Kelvin",
+      "amountUsd": 0,
+      "amountVes": 10000,
+      "receiptPath": "receipts/mw45v6gqa8u9kj.png",
+      "createdAt": "2026-11-05T23:12:44.032Z"
     }
   ],
-  "updatedAt": "2026-11-05T21:49:32.419Z"
+  "updatedAt": "2026-11-05T23:12:44.048Z"
 }
