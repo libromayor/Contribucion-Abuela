@@ -618,7 +618,18 @@
       "amountVes": 25000,
       "receiptPath": "receipts/mw42vejv8uirx8.png",
       "createdAt": "2026-11-05T21:48:56.050Z"
+    },
+    {
+      "id": "imw42w86x77n8",
+      "type": "especial",
+      "date": "2026-11-05",
+      "personId": "p9",
+      "personName": "Alexis",
+      "amountUsd": 0,
+      "amountVes": 25000,
+      "receiptPath": "receipts/mw42w673qtumhh.png",
+      "createdAt": "2026-11-05T21:49:32.409Z"
     }
   ],
-  "updatedAt": "2026-11-05T21:48:56.059Z"
+  "updatedAt": "2026-11-05T21:49:32.419Z"
 }
