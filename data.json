@@ -640,7 +640,18 @@
       "amountVes": 10000,
       "receiptPath": "receipts/mw45v6gqa8u9kj.png",
       "createdAt": "2026-11-05T23:12:44.032Z"
+    },
+    {
+      "id": "imw6og34kf0m0",
+      "type": "especial",
+      "date": "2026-11-07",
+      "personId": "p8",
+      "personName": "Luis Alberto",
+      "amountUsd": 0,
+      "amountVes": 6000,
+      "receiptPath": "receipts/mw6og20xlab2jv.png",
+      "createdAt": "2026-11-07T17:28:23.252Z"
     }
   ],
-  "updatedAt": "2026-11-07T17:27:51.314Z"
+  "updatedAt": "2026-11-07T17:28:23.268Z"
 }
