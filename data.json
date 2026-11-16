@@ -75,10 +75,6 @@
       "name": "Damelis"
     },
     {
-      "id": "pmwjayzb9",
-      "name": "Nueva persona"
-    },
-    {
       "id": "pmwjaz15u",
       "name": "Andrea"
     }
@@ -709,5 +705,5 @@
       "createdAt": "2026-11-07T17:28:23.252Z"
     }
   ],
-  "updatedAt": "2026-11-16T13:32:19.670Z"
+  "updatedAt": "2026-11-16T13:32:34.176Z"
 }
