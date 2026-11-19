@@ -648,6 +648,15 @@
       "amountVes": 27286.06,
       "receiptPath": "receipts/mwfo8m30vzwegw.png",
       "createdAt": "2026-11-14T00:32:33.108Z"
+    },
+    {
+      "id": "emwnz5b4ihgjd",
+      "date": "2026-11-16",
+      "description": "Artículos varios",
+      "amountUsd": 0,
+      "amountVes": 69244.58,
+      "receiptPath": "receipts/mwnz595x90ba6t.png",
+      "createdAt": "2026-11-19T20:00:01.171Z"
     }
   ],
   "incomes": [
@@ -729,5 +738,5 @@
       "createdAt": "2026-11-07T17:28:23.252Z"
     }
   ],
-  "updatedAt": "2026-11-16T22:54:31.968Z"
+  "updatedAt": "2026-11-19T20:00:01.184Z"
 }
